@@ -1,122 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatos & Artículos | Blog Minimalista</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mi Blog Literario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <style>
-        :root {
-            --color-primario: #88AA77;
-            --color-texto: #333333;
-            --fondo-claro: #F9F7F3;
-            --fondo-oscuro: #1A1A1A;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--fondo-claro);
-            color: var(--color-texto);
-            line-height: 1.6;
-        }
-
-        /* Header */
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.8s forwards;
-        }
-
-        /* Grid de Artículos */
-        .grid-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .post-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            cursor: pointer;
-        }
-
-        .post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-        }
-
-        /* Dark Mode */
-        .dark-mode {
-            background: var(--fondo-oscuro);
-            color: #EEE;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .grid-posts { grid-template-columns: 1fr; }
-        }
+      body {
+        padding-bottom: 4rem;
+      }
+      article {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        background-color: #f9f9f9;
+      }
+      h2, h3 {
+        margin-bottom: 0.5rem;
+      }
+      nav strong {
+        font-size: 1.2rem;
+      }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header class="hero">
-        <h1>Palabras Nómadas</h1>
-        <p>Relatos que viajan entre realidades</p>
-        <button onclick="toggleDarkMode()" aria-label="Alternar modo oscuro">🌓</button>
-    </header>
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><strong>Mi Blog Literario</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#articulos">Artículos</a></li>
+        <li><a href="#contacto" role="button">Contacto</a></li>
+      </ul>
+    </nav>
 
-    <main class="grid-posts">
-        <article class="post-card">
-            <h2>El Sendero de las Luciérnagas</h2>
-            <p>Un viaje introspectivo por los bosques de Hokkaido...</p>
-            <time datetime="2025-05-28">28 Mayo 2025</time>
-        </article>
-        
-        <!-- Repetir estructura para más artículos -->
+    <main class="container">
+      <div class="grid">
+        <section>
+          <hgroup>
+            <h2>Bienvenidos a mi espacio</h2>
+            <h3>Relatos, pensamientos y artículos</h3>
+          </hgroup>
+          <p>
+            Aquí comparto mis relatos personales, artículos de opinión y reflexiones. Cada palabra está escrita con dedicación para conectar contigo, lector.
+          </p>
+
+          <h3 id="articulos">Últimas Publicaciones</h3>
+
+          <article>
+            <h4>La noche que cayó el silencio</h4>
+            <p>
+              Un relato sobre los ecos del alma en la oscuridad de una ciudad dormida...
+            </p>
+            <p><small>Publicado el 25 de mayo de 2025</small></p>
+          </article>
+
+          <article>
+            <h4>Reflexiones sobre la escritura</h4>
+            <p>
+              Un artículo donde exploro cómo la escritura transforma nuestras emociones en historias...
+            </p>
+            <p><small>Publicado el 20 de mayo de 2025</small></p>
+          </article>
+        </section>
+      </div>
     </main>
 
-    <script>
-        // Dark Mode Toggle
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
+    <section aria-label="Subscribe example">
+      <div class="container">
+        <article id="contacto">
+          <hgroup>
+            <h2>Suscríbete</h2>
+            <h3>Recibe mis nuevos relatos directamente en tu correo</h3>
+          </hgroup>
+          <form class="grid">
+            <input type="text" id="firstname" name="firstname" placeholder="Tu nombre" aria-label="Nombre" required />
+            <input type="email" id="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" required />
+            <button type="submit" onclick="event.preventDefault()">Suscribirse</button>
+          </form>
+        </article>
+      </div>
+    </section>
 
-        // Animación Scroll
-        window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.post-card');
-            cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                if(cardTop < window.innerHeight * 0.8) {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }
-            });
-        });
-    </script>
-</body>
+    <footer class="container">
+      <small><a href="#">Política de privacidad</a> • <a href="#">Términos de uso</a></small>
+    </footer>
+  </body>
 </html>
