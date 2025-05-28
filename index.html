@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatos & Artículos | Blog Minimalista</title>
+    <style>
+        :root {
+            --color-primario: #88AA77;
+            --color-texto: #333333;
+            --fondo-claro: #F9F7F3;
+            --fondo-oscuro: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--fondo-claro);
+            color: var(--color-texto);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+
+        /* Grid de Artículos */
+        .grid-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .post-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background: var(--fondo-oscuro);
+            color: #EEE;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid-posts { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="hero">
+        <h1>Palabras Nómadas</h1>
+        <p>Relatos que viajan entre realidades</p>
+        <button onclick="toggleDarkMode()" aria-label="Alternar modo oscuro">🌓</button>
+    </header>
+
+    <main class="grid-posts">
+        <article class="post-card">
+            <h2>El Sendero de las Luciérnagas</h2>
+            <p>Un viaje introspectivo por los bosques de Hokkaido...</p>
+            <time datetime="2025-05-28">28 Mayo 2025</time>
+        </article>
+        
+        <!-- Repetir estructura para más artículos -->
+    </main>
+
+    <script>
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Animación Scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.post-card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if(cardTop < window.innerHeight * 0.8) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
