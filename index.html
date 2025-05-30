@@ -1,206 +1,528 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mi Blog </title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog - Colección de Relatos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
-      :root {
-        --bg-primary: #1a1a1a;
-        --bg-secondary: #2a2a2a;
-        --text-primary: #ffffff;
-        --text-secondary: #ccccff;
-        --border-color: #764ba2;
-        --shadow: rgba(102, 126, 234, 0.15);
-        --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #ccccff;
+            --border-color: #764ba2;
+            --shadow: rgba(102, 126, 234, 0.15);
+            --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --wii-blue: #0099ff;
+            --wii-light-blue: #66ccff;
+            --wii-gray: #e6e6e6;
+        }
 
-      body {
-        padding-bottom: 4rem;
-        background-color: var(--bg-primary);
-        color: var(--text-primary);
-        animation: fadeIn 0.8s ease-out;
-      }
+        body {
+            padding-bottom: 4rem;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            animation: fadeIn 0.8s ease-out;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
 
-      body, h1, h2, h3, h4, h5, h6, p, a, li, nav, strong {
-        color: var(--text-primary) !important;
-      }
-      h2, h3, h4, h5, h6, strong {
-        color: var(--text-secondary) !important;
-      }
-      a {
-        color: #b39ddb !important;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-      }
-      a:hover {
-        color: #fff !important;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        background-clip: text;
-        text-shadow: 0 0 8px #764ba2;
-      }
+        body, h1, h2, h3, h4, h5, h6, p, a, li, nav, strong {
+            color: var(--text-primary) !important;
+        }
+        
+        h2, h3, h4, h5, h6, strong {
+            color: var(--text-secondary) !important;
+        }
+        
+        a {
+            color: #b39ddb !important;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        a:hover {
+            color: #fff !important;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 8px #764ba2;
+        }
 
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-      @keyframes slideInLeft {
-        from { opacity: 0; transform: translateX(-30px); }
-        to { opacity: 1; transform: translateX(0); }
-      }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
-      @keyframes slideInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-      }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
 
-      article {
-        margin-bottom: 2rem;
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-        background-color: var(--bg-secondary);
-        border: 1px solid var(--border-color);
-        box-shadow: 0 4px 6px var(--shadow);
-        animation: slideInUp 0.6s ease-out;
-        animation-fill-mode: both;
-      }
+        nav {
+            backdrop-filter: blur(10px);
+            background: var(--accent-gradient);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        nav strong {
+            font-size: 1.2rem;
+            animation: float 3s ease-in-out infinite;
+            color: #fff !important;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
 
-      article:nth-child(1) { animation-delay: 0.1s; }
-      article:nth-child(2) { animation-delay: 0.2s; }
-      article:nth-child(3) { animation-delay: 0.3s; }
+        /* Estilo Wii Menu */
+        .wii-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(118, 75, 162, 0.3);
+        }
 
-      article:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px var(--shadow);
-      }
+        .wii-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
 
-      h2, h3 {
-        margin-bottom: 0.5rem;
-        animation: slideInLeft 0.6s ease-out;
-      }
+        .wii-title {
+            font-size: 2.5rem;
+            color: var(--wii-blue);
+            text-shadow: 0 0 10px var(--wii-light-blue);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
 
-      nav {
-        backdrop-filter: blur(10px);
-        background: var(--accent-gradient);
-        border-bottom: 1px solid var(--border-color);
-        box-shadow: 0 2px 8px var(--shadow);
-      }
-      nav strong {
-        font-size: 1.2rem;
-        animation: float 3s ease-in-out infinite;
-        color: #fff !important;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        background-clip: text;
-      }
+        .wii-subtitle {
+            color: var(--wii-gray);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
 
-      /* Animaciones de entrada para elementos */
-      .animate-in {
-        animation: slideInUp 0.6s ease-out;
-      }
+        .wii-menu {
+            display: flex;
+            overflow-x: auto;
+            padding: 1.5rem 0;
+            gap: 30px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
 
-      /* Efectos hover mejorados */
-      button:not(.theme-toggle):hover,
-      input:focus {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px var(--shadow);
-      }
+        .wii-menu::-webkit-scrollbar {
+            display: none;
+        }
 
-      /* Transiciones suaves para inputs */
-      input {
-        transition: all 0.3s ease;
-        border-color: var(--border-color);
-      }
+        .wii-channel {
+            min-width: 220px;
+            height: 300px;
+            background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+            border-radius: 15px;
+            border: 3px solid var(--wii-blue);
+            box-shadow: 0 8px 25px rgba(0, 153, 255, 0.3);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-      input:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      }
+        .wii-channel:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 153, 255, 0.5);
+            border-color: var(--wii-light-blue);
+        }
 
-      /* Responsive del botón */
-      @media (max-width: 768px) {
-      }
+        .channel-icon {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            overflow: hidden;
+        }
+
+        .channel-content {
+            flex: 1;
+        }
+
+        .channel-title {
+            font-size: 1.4rem;
+            color: var(--wii-light-blue);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .channel-date {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .channel-description {
+            font-size: 0.95rem;
+            color: #ddd;
+            line-height: 1.4;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .wii-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+            color: var(--wii-gray);
+        }
+
+        .wii-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .wii-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--wii-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .wii-button:hover {
+            transform: scale(1.1);
+            background: var(--wii-light-blue);
+        }
+
+        .wii-cursor {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><circle cx="12" cy="12" r="5"/></svg>') center/contain no-repeat;
+            pointer-events: none;
+            z-index: 100;
+            transition: transform 0.1s ease;
+        }
+
+        /* Estilos para el contenido de los artículos */
+        .article-content {
+            display: none;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .article-content h3 {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .article-content p {
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .article-content em {
+            display: block;
+            margin-top: 1.5rem;
+            font-style: italic;
+            color: #aaa;
+            border-left: 3px solid var(--border-color);
+            padding-left: 1rem;
+        }
+
+        .back-button {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .wii-menu {
+                gap: 20px;
+            }
+            
+            .wii-channel {
+                min-width: 200px;
+                height: 280px;
+            }
+            
+            .channel-icon {
+                height: 120px;
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wii-channel {
+                min-width: 180px;
+                height: 250px;
+            }
+            
+            .channel-icon {
+                height: 100px;
+            }
+            
+            .channel-title {
+                font-size: 1.2rem;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <nav class="container-fluid">
-      <ul>
-        <li><strong>Mi Blog </strong></li>
-      </ul>
-      <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#articulos">Artículos</a></li>
-        <li><a href="#contacto" role="button">Contacto</a></li>
-      </ul>
+        <ul>
+            <li><strong>Mi Blog de Relatos</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#articulos">Artículos</a></li>
+            <li><a href="#contacto" role="button">Contacto</a></li>
+        </ul>
     </nav>
 
     <main class="container">
-      <div class="grid">
-        <section>
-          <hgroup>
-            <h2>Bienvenidos </h2>
-            <h3>Relatos, pensamientos y artículos</h3>
-          </hgroup>
-          <p>
-            Aquí comparto mis relatos personales, artículos de opinión y reflexiones. 
-          </p>
+        <div class="grid">
+            <section>
+                <hgroup>
+                    <h2>Bienvenidos a mi colección de relatos</h2>
+                    <h3>Historias, reflexiones y sátiras de la vida cotidiana</h3>
+                </hgroup>
+                <p>
+                    Explora mis obras organizadas como el famoso menú de la Wii. Selecciona un relato para leerlo completo.
+                </p>
 
-          <h3 id="articulos">Últimas Publicaciones</h3>
-
-          <article>
-            <h4>Articulo 1</h4>
-            <p>
-              Descripcion articulo 1
-            </p>
-            <p><small>Publicado el 99 de 99 de 99 </small></p>
-          </article>
-
-          <article>
-            <h4>Articulo 2</h4>
-            <p>
-              Villodres pandereta descripcion
-            </p>
-            <p><small>Publicado el 99 de 99 de 99 </small></p>
-          </article>
-        </section>
-      </div>
+                <div class="wii-container">
+                    <div class="wii-header">
+                        <div class="wii-title">Colección de Relatos</div>
+                        <div class="wii-subtitle">Desplázate horizontalmente para explorar mis obras</div>
+                    </div>
+                    
+                    <div class="wii-menu" id="wii-menu">
+                        <!-- Relato 1 -->
+                        <div class="wii-channel" data-article="1">
+                            <div class="channel-icon">📚</div>
+                            <div class="channel-content">
+                                <div class="channel-title">Ecos del Pasado</div>
+                                <div class="channel-date">Publicado el 15 de abril de 2023</div>
+                                <div class="channel-description">Un viaje nostálgico por los recuerdos de la infancia y los profesores que dejaron huella.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Relato 2 -->
+                        <div class="wii-channel" data-article="2">
+                            <div class="channel-icon">😄</div>
+                            <div class="channel-content">
+                                <div class="channel-title">Sátira: La vida en Teatinos</div>
+                                <div class="channel-date">Publicado el 22 de mayo de 2023</div>
+                                <div class="channel-description">Una mirada irónica a la vida de las madres en un barrio de Málaga.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Canal vacío para demostrar el scroll -->
+                        <div class="wii-channel" style="opacity: 0.5; pointer-events: none;">
+                            <div class="channel-icon">🔜</div>
+                            <div class="channel-content">
+                                <div class="channel-title">Nuevo relato</div>
+                                <div class="channel-date">Próximamente</div>
+                                <div class="channel-description">Mi próxima historia está en camino...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wii-footer">
+                        <div>Desplázate con las flechas o arrastra</div>
+                        <div class="wii-controls">
+                            <div class="wii-button" id="scroll-left">←</div>
+                            <div class="wii-button" id="scroll-right">→</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenido de los artículos (inicialmente oculto) -->
+                <div class="article-content" id="article-1">
+                    <button class="back-button">← Volver al menú</button>
+                    <h3>Ecos del Pasado</h3>
+                    <p>Cierro los ojos y me dejo llevar por el silencio. Iba a dormirme, pero algo me detiene: "¿Y si aún queda algo de aquel tiempo…?" Abro los párpados y enciendo el móvil. Allí está la cuenta de YouTube de mi antiguo colegio de primaria, como una ventana abierta por el viento.</p>
+                    <p>Empiezo a ver un vídeo tras otro buscando a mi generación, carreras en el patio, juegos bajo el sol, día de la fritilla, aquella Navidad… Cada imagen me arrastra de nuevo a esos días sencillos y felices. Siempre esperé que el destino se endeudase conmigo, prometiéndome una nueva visión de mis profesores, la posibilidad de hablar con ellos otra vez.</p>
+                    <p>¿Y qué habrá sido del joven profe Nacho? Aquel tutor del que fuimos su primera clase y que siempre llevaremos en el recuerdo. Me pregunto si sigue tan lleno de energía, me recuerda a Manuel de matemáticas. Su voz aún resuena en mi cabeza como un eco amable.</p>
+                    <p>También pienso en Cristóbal, el profesor que nos cuidó desde ese delicado primer día de colegio hasta que entramos en primaria. ¿Logró curar a su madre después de aquella difícil enfermedad? Me gustaría saber si su sonrisa volvió a ser tan tranquila como la recordamos.</p>
+                    <p>Y no puedo olvidar a Raquel, la profe de matemáticas que vivía tan cerca de mi casa. A veces la saludo por la calle, pero ya no me reconoce, me duele un poco que ella ya no sepa quién soy, no la culpo, debería dejarme el pelo largo y buscar las gafas en el cajón.</p>
+                    <p>Un día, nuestros caminos se separaron y cada uno siguió su propia ruta. El colegio se quedó quieto, con sus pasillos silenciosos, sus pizarras llenas de tiza y las sillas levantadas.</p>
+                    <p>Ahora sólo nos quedan estas imágenes frágiles, como dibujos en la arena que una ola puede borrar. Al final, siempre seremos historias.</p>
+                </div>
+                
+                <div class="article-content" id="article-2">
+                    <button class="back-button">← Volver al menú</button>
+                    <h3>Sátira: La vida en Teatinos</h3>
+                    <p>En Teatinos, esa burbuja de estudiantes y pisos modernos con jardines comunitarios que casi nunca se usan, reina una especie peculiar: "la madre no madre", que parece tener un máster en aparentar éxito. Se quedó en los treinta cuando no tenía hijos y salía con sus amigas, no asimila tener la responsabilidad de un hijo. Sale de su casa a primera hora con un bolso que cuesta más que un mes de alquiler en el centro, lista para conquistar el mundo desde su cubículo de la planta baja. Por supuesto, cuando vuelve por la tarde, no hay ni rastro del cansancio: es una boss mom y lo tiene todo bajo control.</p>
+                    <p>Tiene un hijo único, que es el centro de su universo y también de su agenda. El niño lleva la mejor equipación de tenis y aparece todos los días con el uniforme del ostentoso colegio privado y un puleva de chocolate en la mano, pero su revés es un poema al fracaso deportivo. Ella insiste en que sigue las clases porque "es importante que haga ejercicio", aunque la realidad es que gasta más calorías moviendo el joystick de la consola que en las pistas. Entre punto y punto, se recompensa con meriendas que incluyen todo tipo de galletas de marca "bio", aunque lo que realmente quiere es un bollicao. Además está apuntado a miles de extraescolares ya que ser madre es súper cansado y el niño necesita desarrollarse aunque no destaca en nada.</p>
+                    <p>Los cumpleaños son un capítulo aparte. Se organizan en locales que parecen diseñados para rodar un anuncio de juguetes. Todo está perfectamente planificado: las invitaciones digitales con fondos de estrellas, una mesa dulce más cara que la comunión de un primo, y una animadora vestida de princesa que hace globoflexia mientras piensa en las oposiciones que nunca aprobó. Los otros padres miran de reojo, cada uno juzgando si las bolsas de chuches son lo suficientemente premium o si las servilletas combinan con los vasos.</p>
+                    <p>Cuando llega la Navidad, el pequeño salón se transforma en una postal de revista. El árbol es un monumento al consumismo, adornado con bolas de cristal soplado y luces que cambian de color según el estado de ánimo (o el Wi-Fi). La mesa de Nochebuena es un catálogo de delicatesen: salmón ahumado, patés franceses y un pan de masa madre que todos dicen que está delicioso, aunque es más duro que una piedra. Entre brindis con cava brut nature, alguien pregunta: "¿Dónde compraste este foie?" y ella, con sonrisa de superioridad, responde: "Es de un pequeño productor que conocí en la feria gourmet de Los Angeles de la semana pasada".</p>
+                    <p>El día a día, sin embargo, tiene su rutina previsible. Las compras se reparten entre supermercados de alta gama (donde las perchas del uniforme del niño cuestan como un menú del día) y tiendas de barrio "con encanto" donde compran flores frescas que duran un suspiro. Las tardes se dedican a actividades extracurriculares como inglés (aunque en casa lo más internacional es ver Peppa Pig con subtítulos) o manualidades dirigidas por monitoras que cobran por enseñar a pintar piedras.</p>
+                    <p>Y ahí están, viviendo en su piso de Teatinos: dos baños, tres habitaciones y un salón decorado con muebles de diseño escandinavo que parece sacado de Instagram. La cafetera de cápsulas es más cara que el coche del vecino, pero sirve solo para hacer capuchinos que se quedan fríos mientras hacen mil cosas "urgentes".</p>
+                    <p>Por fuera, todo parece perfecto. Pero si te fijas bien, entre las risas del niño y las charlas de los padres, hay algo de resignación y mucha competición disfrazada de sonrisa. Porque en este rincón de Málaga, el éxito se mide en etiquetas, y la felicidad... bueno, esa se compra cada semana junto con el pan sin gluten y la leche de almendras para ser moderna.</p>
+                    <em>(Este tiene una historia detrás: Tras disputar mi partido de liga de tenis, en el que, puedo añadir con cierta emoción, gané 2-0 a mi rival. Mi contrincante era un niño que encajaba perfectamente en ese perfil que tantas veces he pensado: equipado con la bolsa y raqueta más cara, uniforme impecable nike y unas acciones copiadas de Don Rafael Nadal (ganó 2 puntos y ambos los celebró como si estuviese en la funal de wimblendon, cuando perdió se tiró al suelo como si hubiese perdido millones de euros). Tras el partido, decidí pasar por El Corte Ingles, que se encuentra al lado de mi academia de tenis, fui a comprar al hipercor, apenas crucé las puertas, me sentí atrapado por un desfile de clichés: madres con listas de la compra interminables, carritos llenos de productos gourmet, niños pidiendo el nuevo actimel de sonic el erizo, etc, todo era tan inspirador para mi que conforme esperaba la cola de la panadería se me ocurrió escribir una sátira.)</em>
+                </div>
+            </section>
+        </div>
     </main>
 
     <section aria-label="Subscribe example">
-      <div class="container">
-        <article id="contacto">
-          <hgroup>
-            <h2>Suscríbete</h2>
-            <h3>Recibe mis ultimas novedades directamente en tu correo</h3>
-          </hgroup>
-          <form class="grid">
-            <input type="text" id="firstname" name="firstname" placeholder="Tu nombre" aria-label="Nombre" required />
-            <input type="email" id="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" required />
-            <button type="submit" onclick="event.preventDefault()">Suscribirse</button>
-          </form>
-        </article>
-      </div>
+        <div class="container">
+            <article id="contacto">
+                <hgroup>
+                    <h2>Suscríbete</h2>
+                    <h3>Recibe mis últimas novedades directamente en tu correo</h3>
+                </hgroup>
+                <form class="grid">
+                    <input type="text" id="firstname" name="firstname" placeholder="Tu nombre" aria-label="Nombre" required />
+                    <input type="email" id="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" required />
+                    <button type="submit" onclick="event.preventDefault()">Suscribirse</button>
+                </form>
+            </article>
+        </div>
     </section>
 
     <script>
-      // Eliminar todo el JS relacionado con el botón de modo oscuro y arrastre
-      // Solo mantener la animación de artículos
-      document.addEventListener('DOMContentLoaded', function() {
-        // Añadir animaciones escalonadas a los artículos
-        const articles = document.querySelectorAll('article');
-        articles.forEach((article, index) => {
-          article.style.animationDelay = `${index * 0.1}s`;
+        document.addEventListener('DOMContentLoaded', function() {
+            const wiiMenu = document.getElementById('wii-menu');
+            const scrollLeftBtn = document.getElementById('scroll-left');
+            const scrollRightBtn = document.getElementById('scroll-right');
+            const backButtons = document.querySelectorAll('.back-button');
+            const articleContents = document.querySelectorAll('.article-content');
+            const wiiChannels = document.querySelectorAll('.wii-channel');
+            
+            // Crear cursor estilo Wii
+            const cursor = document.createElement('div');
+            cursor.className = 'wii-cursor';
+            document.body.appendChild(cursor);
+            cursor.style.display = 'none';
+            
+            // Mostrar cursor al mover el ratón
+            document.addEventListener('mousemove', function(e) {
+                cursor.style.display = 'block';
+                cursor.style.left = (e.pageX - 20) + 'px';
+                cursor.style.top = (e.pageY - 20) + 'px';
+            });
+            
+            // Scroll horizontal con botones
+            scrollLeftBtn.addEventListener('click', () => {
+                wiiMenu.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            scrollRightBtn.addEventListener('click', () => {
+                wiiMenu.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+            
+            // Navegación del teclado para los canales
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    wiiMenu.scrollBy({ left: -300, behavior: 'smooth' });
+                } else if (e.key === 'ArrowRight') {
+                    wiiMenu.scrollBy({ left: 300, behavior: 'smooth' });
+                }
+            });
+            
+            // Manejar clic en los canales
+            wiiChannels.forEach(channel => {
+                if (channel.dataset.article) {
+                    channel.addEventListener('click', function() {
+                        const articleId = this.dataset.article;
+                        
+                        // Ocultar todos los artículos primero
+                        articleContents.forEach(article => {
+                            article.style.display = 'none';
+                        });
+                        
+                        // Mostrar el artículo seleccionado
+                        const selectedArticle = document.getElementById(`article-${articleId}`);
+                        if (selectedArticle) {
+                            selectedArticle.style.display = 'block';
+                            
+                            // Desplazar a la vista
+                            selectedArticle.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+            
+            // Manejar botones de volver
+            backButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Ocultar todos los artículos
+                    articleContents.forEach(article => {
+                        article.style.display = 'none';
+                    });
+                    
+                    // Desplazar al menú principal
+                    document.querySelector('.wii-container').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Efecto hover mejorado para los canales
+            wiiChannels.forEach(channel => {
+                channel.addEventListener('mouseenter', function() {
+                    cursor.style.transform = 'scale(1.2)';
+                });
+                
+                channel.addEventListener('mouseleave', function() {
+                    cursor.style.transform = 'scale(1)';
+                });
+            });
         });
-      });
     </script>
-  </body>
+</body>
 </html>
