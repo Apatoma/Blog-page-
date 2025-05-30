@@ -98,7 +98,7 @@
       /* Botón de modo oscuro */
       .theme-toggle {
         position: fixed;
-        top: 20px;
+        top: 80px;
         right: 20px;
         width: 50px;
         height: 50px;
@@ -106,7 +106,7 @@
         border: none;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        cursor: pointer;
+        cursor: grab;
         z-index: 1000;
         display: flex;
         align-items: center;
@@ -115,6 +115,17 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         animation: pulse 2s infinite;
+        user-select: none;
+      }
+
+      .theme-toggle:active {
+        cursor: grabbing;
+        transform: scale(0.95);
+      }
+
+      .theme-toggle.dragging {
+        animation: none;
+        transition: none;
       }
 
       @keyframes pulse {
@@ -168,7 +179,7 @@
       /* Responsive del botón */
       @media (max-width: 768px) {
         .theme-toggle {
-          top: 15px;
+          top: 75px;
           right: 15px;
           width: 45px;
           height: 45px;
@@ -243,7 +254,18 @@
     </section>
 
     <script>
+      let isDragging = false;
+      let currentX;
+      let currentY;
+      let initialX;
+      let initialY;
+      let xOffset = 0;
+      let yOffset = 0;
+
       function toggleTheme() {
+        // Solo cambia el tema si no se está arrastrando
+        if (isDragging) return;
+        
         const html = document.documentElement;
         const themeIcon = document.getElementById('theme-icon');
         const currentTheme = html.getAttribute('data-theme');
@@ -259,15 +281,93 @@
         }
       }
 
+      function dragStart(e) {
+        const themeButton = document.querySelector('.theme-toggle');
+        
+        if (e.type === "touchstart") {
+          initialX = e.touches[0].clientX - xOffset;
+          initialY = e.touches[0].clientY - yOffset;
+        } else {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+        }
+
+        if (e.target === themeButton) {
+          isDragging = true;
+          themeButton.classList.add('dragging');
+        }
+      }
+
+      function dragEnd(e) {
+        const themeButton = document.querySelector('.theme-toggle');
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+        themeButton.classList.remove('dragging');
+        
+        // Guardar posición en localStorage
+        localStorage.setItem('themeButtonX', xOffset);
+        localStorage.setItem('themeButtonY', yOffset);
+      }
+
+      function drag(e) {
+        if (isDragging) {
+          e.preventDefault();
+          const themeButton = document.querySelector('.theme-toggle');
+          
+          if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+          } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+          }
+
+          xOffset = currentX;
+          yOffset = currentY;
+
+          // Limitar el movimiento dentro de la ventana
+          const rect = themeButton.getBoundingClientRect();
+          const maxX = window.innerWidth - rect.width;
+          const maxY = window.innerHeight - rect.height;
+          
+          xOffset = Math.max(0, Math.min(xOffset, maxX));
+          yOffset = Math.max(0, Math.min(yOffset, maxY));
+
+          themeButton.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        }
+      }
+
       // Cargar tema guardado
       document.addEventListener('DOMContentLoaded', function() {
         const savedTheme = localStorage.getItem('theme');
         const themeIcon = document.getElementById('theme-icon');
+        const themeButton = document.querySelector('.theme-toggle');
         
         if (savedTheme === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
           themeIcon.textContent = '☀️';
         }
+
+        // Cargar posición guardada del botón
+        const savedX = localStorage.getItem('themeButtonX');
+        const savedY = localStorage.getItem('themeButtonY');
+        
+        if (savedX && savedY) {
+          xOffset = parseInt(savedX);
+          yOffset = parseInt(savedY);
+          themeButton.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        }
+
+        // Event listeners para arrastrar
+        themeButton.addEventListener('mousedown', dragStart);
+        themeButton.addEventListener('touchstart', dragStart);
+        
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('touchmove', drag);
+        
+        document.addEventListener('mouseup', dragEnd);
+        document.addEventListener('touchend', dragEnd);
 
         // Añadir animaciones escalonadas a los artículos
         const articles = document.querySelectorAll('article');
