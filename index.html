@@ -9,8 +9,8 @@
       :root {
         --bg-primary: #ffffff;
         --bg-secondary: #f9f9f9;
-        --text-primary: #111111; /* Más negro */
-        --text-secondary: #333333; /* Más oscuro */
+        --text-primary: #111111 !important; /* Más negro, reforzado */
+        --text-secondary: #222222 !important; /* Más oscuro, reforzado */
         --border-color: #e0e0e0;
         --shadow: rgba(0, 0, 0, 0.1);
       }
@@ -33,6 +33,22 @@
         background-color: var(--bg-primary);
         color: var(--text-primary);
         animation: fadeIn 0.8s ease-out;
+      }
+
+      body, h1, h2, h3, h4, h5, h6, p, a, li, nav, strong {
+        color: var(--text-primary) !important;
+      }
+
+      h2, h3, h4, h5, h6, strong {
+        color: var(--text-secondary) !important;
+      }
+
+      a {
+        color: var(--text-primary) !important;
+      }
+
+      a:hover {
+        color: #667eea !important;
       }
 
       @keyframes fadeIn {
@@ -158,11 +174,6 @@
       input:focus {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px var(--shadow);
-      }
-
-      a:hover {
-        color: #667eea;
-        transform: translateY(-1px);
       }
 
       /* Transiciones suaves para inputs */
