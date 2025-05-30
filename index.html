@@ -7,25 +7,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <style>
       :root {
-        --bg-primary: #ffffff;
-        --bg-secondary: #f9f9f9;
-        --text-primary: #111111 !important; /* Más negro, reforzado */
-        --text-secondary: #222222 !important; /* Más oscuro, reforzado */
-        --border-color: #e0e0e0;
-        --shadow: rgba(0, 0, 0, 0.1);
-      }
-
-      [data-theme="dark"] {
         --bg-primary: #1a1a1a;
         --bg-secondary: #2a2a2a;
         --text-primary: #ffffff;
-        --text-secondary: #cccccc;
-        --border-color: #404040;
-        --shadow: rgba(255, 255, 255, 0.1);
-      }
-
-      * {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --text-secondary: #ccccff;
+        --border-color: #764ba2;
+        --shadow: rgba(102, 126, 234, 0.15);
+        --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       }
 
       body {
@@ -38,17 +26,21 @@
       body, h1, h2, h3, h4, h5, h6, p, a, li, nav, strong {
         color: var(--text-primary) !important;
       }
-
       h2, h3, h4, h5, h6, strong {
         color: var(--text-secondary) !important;
       }
-
       a {
-        color: var(--text-primary) !important;
+        color: #b39ddb !important;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
       }
-
       a:hover {
-        color: #667eea !important;
+        color: #fff !important;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: 0 0 8px #764ba2;
       }
 
       @keyframes fadeIn {
@@ -96,72 +88,19 @@
         animation: slideInLeft 0.6s ease-out;
       }
 
+      nav {
+        backdrop-filter: blur(10px);
+        background: var(--accent-gradient);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 2px 8px var(--shadow);
+      }
       nav strong {
         font-size: 1.2rem;
         animation: float 3s ease-in-out infinite;
-      }
-
-      nav {
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.9);
-        border-bottom: 1px solid var(--border-color);
-      }
-
-      [data-theme="dark"] nav {
-        background-color: rgba(26, 26, 26, 0.9);
-      }
-
-      /* Botón de modo oscuro */
-      .theme-toggle {
-        position: fixed;
-        top: 90px; /* Más abajo para no tapar el menú */
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        cursor: grab;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        animation: pulse 2s infinite;
-        user-select: none;
-      }
-
-      .theme-toggle:active {
-        cursor: grabbing;
-        transform: scale(0.95);
-      }
-
-      .theme-toggle.dragging {
-        animation: none;
-        transition: none;
-      }
-
-      @keyframes pulse {
-        0% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
-        50% { box-shadow: 0 4px 25px rgba(102, 126, 234, 0.4); }
-        100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
-      }
-
-      .theme-toggle:hover {
-        transform: scale(1.1) rotate(180deg);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-      }
-
-      [data-theme="dark"] .theme-toggle {
-        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-        color: #2d3436;
-      }
-
-      [data-theme="dark"] .theme-toggle:hover {
-        box-shadow: 0 6px 20px rgba(255, 234, 167, 0.4);
+        color: #fff !important;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
       }
 
       /* Animaciones de entrada para elementos */
@@ -189,22 +128,10 @@
 
       /* Responsive del botón */
       @media (max-width: 768px) {
-        .theme-toggle {
-          top: 85px;
-          right: 15px;
-          width: 45px;
-          height: 45px;
-          font-size: 1rem;
-        }
       }
     </style>
   </head>
   <body>
-    <!-- Botón de modo oscuro -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
-      <span id="theme-icon">🌙</span>
-    </button>
-
     <nav class="container-fluid">
       <ul>
         <li><strong>Mi Blog </strong></li>
@@ -265,121 +192,9 @@
     </section>
 
     <script>
-      let isDragging = false;
-      let currentX;
-      let currentY;
-      let initialX;
-      let initialY;
-      let xOffset = 0;
-      let yOffset = 0;
-
-      function toggleTheme() {
-        // Solo cambia el tema si no se está arrastrando
-        if (isDragging) return;
-        
-        const html = document.documentElement;
-        const themeIcon = document.getElementById('theme-icon');
-        const currentTheme = html.getAttribute('data-theme');
-        
-        if (currentTheme === 'dark') {
-          html.removeAttribute('data-theme');
-          themeIcon.textContent = '🌙';
-          localStorage.setItem('theme', 'light');
-        } else {
-          html.setAttribute('data-theme', 'dark');
-          themeIcon.textContent = '☀️';
-          localStorage.setItem('theme', 'dark');
-        }
-      }
-
-      function dragStart(e) {
-        const themeButton = document.querySelector('.theme-toggle');
-        
-        if (e.type === "touchstart") {
-          initialX = e.touches[0].clientX - xOffset;
-          initialY = e.touches[0].clientY - yOffset;
-        } else {
-          initialX = e.clientX - xOffset;
-          initialY = e.clientY - yOffset;
-        }
-
-        if (e.target === themeButton) {
-          isDragging = true;
-          themeButton.classList.add('dragging');
-        }
-      }
-
-      function dragEnd(e) {
-        const themeButton = document.querySelector('.theme-toggle');
-        initialX = currentX;
-        initialY = currentY;
-        isDragging = false;
-        themeButton.classList.remove('dragging');
-        
-        // Guardar posición en localStorage
-        localStorage.setItem('themeButtonX', xOffset);
-        localStorage.setItem('themeButtonY', yOffset);
-      }
-
-      function drag(e) {
-        if (isDragging) {
-          e.preventDefault();
-          const themeButton = document.querySelector('.theme-toggle');
-          
-          if (e.type === "touchmove") {
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
-          } else {
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-          }
-
-          xOffset = currentX;
-          yOffset = currentY;
-
-          // Limitar el movimiento dentro de la ventana
-          const rect = themeButton.getBoundingClientRect();
-          const maxX = window.innerWidth - rect.width;
-          const maxY = window.innerHeight - rect.height;
-          
-          xOffset = Math.max(0, Math.min(xOffset, maxX));
-          yOffset = Math.max(0, Math.min(yOffset, maxY));
-
-          themeButton.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-        }
-      }
-
-      // Cargar tema guardado
+      // Eliminar todo el JS relacionado con el botón de modo oscuro y arrastre
+      // Solo mantener la animación de artículos
       document.addEventListener('DOMContentLoaded', function() {
-        const savedTheme = localStorage.getItem('theme');
-        const themeIcon = document.getElementById('theme-icon');
-        const themeButton = document.querySelector('.theme-toggle');
-        
-        if (savedTheme === 'dark') {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          themeIcon.textContent = '☀️';
-        }
-
-        // Cargar posición guardada del botón
-        const savedX = localStorage.getItem('themeButtonX');
-        const savedY = localStorage.getItem('themeButtonY');
-        
-        if (savedX && savedY) {
-          xOffset = parseInt(savedX);
-          yOffset = parseInt(savedY);
-          themeButton.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-        }
-
-        // Event listeners para arrastrar
-        themeButton.addEventListener('mousedown', dragStart);
-        themeButton.addEventListener('touchstart', dragStart);
-        
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('touchmove', drag);
-        
-        document.addEventListener('mouseup', dragEnd);
-        document.addEventListener('touchend', dragEnd);
-
         // Añadir animaciones escalonadas a los artículos
         const articles = document.querySelectorAll('article');
         articles.forEach((article, index) => {
